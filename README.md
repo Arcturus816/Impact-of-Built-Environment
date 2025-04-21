@@ -125,4 +125,20 @@ variables.
 
 ### Notebooks
 
+- [`data_processing.ipynb`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/code/data-processing.ipynb) contains our data processing pipeline
+- [`data_visualizations.ipynb`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/code/data_visualizations.ipynb) contains visualizations of our data
+- [`geospatial_visualizations`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/code/geospatial_visualizations.ipynb) contains geospatial visualizations, mapping our target variable and some feature variables
+- [`model_fitting`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/code/model_fitting.ipynb) contains our model training and evaluation
+
 ### CSVs
+
+We did not include the raw data sets in our repo because they are too large.
+- You can find the US Accidents data as a CSV on [Kaggle](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents).
+- You can find the Smart Location Database as a file geodatabase on the [EPA's website](https://www.epa.gov/smartgrowth/smart-location-mapping).
+
+Our [`data_processing.ipynb`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/code/data-processing.ipynb)
+notebook generated the following processed data sets on our repo.
+- [`cbg_feature_select_and_transform_train`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/data/processed/CSVs/cbg_feature_select_and_transform_train.csv) and [`bg_feature_select_and_transform_test`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/data/processed/CSVs/cbg_feature_select_and_transform_test.csv) are the most inclusive version of our processed data
+- [`cbg_gt3crashes_feature_select_and_transform_train`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/data/processed/CSVs/cbg_gt3crashes_feature_select_and_transform_train.csv) and [`cbg_gt3crashes_feature_select_and_transform_test`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/data/processed/CSVs/cbg_gt3crashes_feature_select_and_transform_test.csv) exclude census block groups with fewer than 4 crashes
+- [`cbg_no2020_feature_select_and_transform_train`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/data/processed/CSVs/cbg_no2020_feature_select_and_transform_train.csv) and [`cbg_no2020__feature_select_and_transform_test`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/data/processed/CSVs/cbg_no2020__feature_select_and_transform_test.csv) exclude crashes from the year 2020
+- [`cbg_no2020_gt3crashes_feature_select_and_transform_train`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/data/processed/CSVs/cbg_no2020_gt3crashes_feature_select_and_transform_train.csv) and [`cbg_no2020_gt3crashes_feature_select_and_transform_test`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/data/processed/CSVs/cbg_no2020_gt3crashes_feature_select_and_transform_test.csv) are the data sets that we ended up using
