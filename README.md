@@ -15,7 +15,9 @@ There are more than 5 millioin motor vehicle accidents (MVCs) in the United Stat
 
 ## Data processing and feature selection
 
-During our feature selection process, we sought to reduce our number of features to fewer than 20. We began by highlighting features that had a moderate correlation (roughly .3<|R^2|<.8)to our target variable, as indicated by correlation heat maps. We eliminated features by selecting between highly correlated variables to reduce multicolinearity and by eliminating redundant features. Work toward this goal can be found in 
+Our data processing steps required the use of geopandas, as the location information for the datas sets we used were in different formats. Though this package, we were able to match the exact site of a crash with the Census Block Group (CBG) to which that location belongs. 
+
+During our feature selection process, we sought to reduce our number of features to fewer than 20. We began by highlighting features that had a moderate correlation (roughly .3<|R^2|<.8)to our target variable, as indicated by correlation heat maps. We eliminated features by selecting between highly correlated variables to reduce multicolinearity and by eliminating redundant features. Work toward this goal can be found in ________, ____, within the repository.
 This heat map indicates correlations between our final 17 features and our target variable. 
 
 Some of our features were highly skewed and we performed a log_10 transformation on these to increase interpretability. 
