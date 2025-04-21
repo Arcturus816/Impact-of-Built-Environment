@@ -65,7 +65,59 @@ Notably, the data set comes not as a CSV file, but as a file geodatabase.[^gdb]
 [Wikipedia article](https://en.wikipedia.org/wiki/Geodatabase_(Esri))
 ([archive](https://archive.today/2025.04.21-230032/https://en.wikipedia.org/wiki/Geodatabase_(Esri)) on archive.today).
 
-## Data processing and feature selection
+## Data processing
+
+Before we could be begin, we needed to combine our two data sets.
+One possible approach would be to add built environment variables from the
+EPA's Smart Location Database to each motor vehicle crash in the Kaggle data set.
+Such an approach would mean that our model would be observing features
+of crashes, then predicting the severity of the crash.
+However, this approach does not address the likelihood of a crash happening;
+it addresses only how the built environment attenuates severity, given that a
+crash already happened.
+
+Thus, we adopted a different approach:
+Instead of attaching variables from the Smart Location Database to each crash
+from the Kaggle data set, we instead aggregated the crashes by census block group.
+With this approach, our model would observe features of a census block group,
+then predict the number of severity-weighted crashes that occurred during the
+timeframe when the crash data was collected.
+
+When engineering our target variable, we took the severity variable from Kaggle
+to create a "severity-weighted" crash, so that our prediction model would
+weigh severe crashes more heavily than light crashes.
+We also realized that, since census block groups are highly heterogenous in
+terms of both population and land area, that we would need to somehow control
+for these confounding variables.
+Ideally, we would have controlled for vehicle miles traveled in each census block group.
+While the Smart Location Database had variables with `VMT` in the name, we
+could not find explanations of these variables in the
+[Smart Location Database Technical Documentation and User Guide](https://www.epa.gov/system/files/documents/2023-10/epa_sld_3.0_technicaldocumentationuserguide_may2021_0.pdf),
+so we decided not to use these variables.
+Instead, we controlled our target variable by population density.
+Thus, we engineered our target variable to be
+$$
+\text{"crash density"} =
+\frac{\text{crashes} \cdot \text{severity}}{\text{population density}}
+$$
+
+To merge the two data sets, we used GeoPandas to take the latitude-longitude data
+from each motor vehicle crash and convert those coordinates to the same
+Coordinate Reference System used by the Smart Location Database.
+We could then determine the census block group in which each crash occurred by
+using spatial join in GeoPandas.
+
+We cleaned the data of rows with nonsensical or extreme data
+(e.g. census block groups with zero population, zero land area, zero roads, etc.).
+We chose to exclude census block groups with fewer than 4 crashes, since a
+census block group with fewer than 4 crashes from 2016 to 2023 probably has
+negligible motor vehicle activity.
+We also excluded crashes from the year 2020, since driving and pedestrian
+activity during that year was impacted by the COVID-19 pandemic lockdown.
+After cleaning our data, we performed log transformations on highly skewed
+variables.
+
+## Feature selection
 
 ## Model selection and results
 
