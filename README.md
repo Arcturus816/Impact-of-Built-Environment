@@ -30,9 +30,14 @@ junctions, traffic stops, roundabouts, etc.
   [Kaggle page](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents)
   ([archive](https://archive.today/2025.04.21-223913/https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents)
   on archive.today), as well as the accompanying articles from the authors of
-  the data set.
-  - [A Countrywide Traffic Accident Dataset](https://arxiv.org/abs/1906.05409) ([archive](https://web.archive.org/web/20250321054247/https://arxiv.org/pdf/1906.05409) on the Wayback Machine)
-  - [Accident Risk Prediction based on Heterogeneous Sparse Data: New Dataset and Insights](https://arxiv.org/abs/1909.09638) ([archive](https://web.archive.org/web/20250224100248/https://arxiv.org/pdf/1909.09638) on the Wayback Machine)
+  the data set:
+  [A Countrywide Traffic Accident Dataset](https://arxiv.org/abs/1906.05409)
+  ([archive](https://web.archive.org/web/20250321054247/https://arxiv.org/pdf/1906.05409)
+  on the Wayback Machine),
+  and
+  [Accident Risk Prediction based on Heterogeneous Sparse Data: New Dataset and Insights](https://arxiv.org/abs/1909.09638)
+  ([archive](https://web.archive.org/web/20250224100248/https://arxiv.org/pdf/1909.09638)
+  on the Wayback Machine).
 
 The data about the built environment comes from the [Smart Location Database](https://www.epa.gov/smartgrowth/smart-location-mapping)
 from the EPA.[^epa]
@@ -58,7 +63,7 @@ Notably, the data set comes not as a CSV file, but as a file geodatabase.[^gdb]
 
 [^gdb]: For more information on file geodatabases, see the
 [Wikipedia article](https://en.wikipedia.org/wiki/Geodatabase_(Esri))
-([archive]() on archive.today).
+([archive](https://archive.today/2025.04.21-230032/https://en.wikipedia.org/wiki/Geodatabase_(Esri)) on archive.today).
 
 ## Data processing and feature selection
 
