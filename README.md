@@ -120,9 +120,14 @@ variables.
 
 ## Feature selection
 
-During our feature selection process, we sought to reduce our number of features to fewer than 20. We began by highlighting features that had a moderate correlation (roughly .3<|R^2|<.8)to our target variable, as indicated by correlation heat maps. We eliminated features by selecting between highly correlated variables to reduce multicolinearity and by eliminating redundant features. Work toward this goal can be found in code/data_visualizations.ipynb within the repository. This heat map indicates correlations between our final 17 features and our target variable. 
+During our feature selection process, we sought to reduce our number of features to fewer than 20. We began by highlighting features that had a moderate correlation (roughly .3<|R^2|<.8) to our target variable, as indicated by correlation heat maps. We eliminated features by selecting between highly correlated variables to reduce multicolinearity and by eliminating redundant features. For example, some columns indicated the number of households with 0, 1, or 2 automobiles in a given CBG while others listed the respective percentages of each in the same CBG. 
 
-Some of our features were highly skewed and we performed a log_10 transformation on these to increase their interpretability. 
+Ultimately, we were able to trim our number of features down to 17 while maintaining a representative sample 
+of features.
+
+Work toward this goal can be found in code/data_visualizations.ipynb within the repository. 
+
+
 
 ## Model selection and results
 After performing an 80/20 train-test split of our dataset and spending some time on exploratory data analysis, we began to train some models and compare their performances using root mean squared error (RMSE) as a performance metric. We started with Multiple Linear Regression as a baseline model and went on to consider Lasso and Ridge regression, Random Forest Regression and XGBoost Regression. For each of these models we used 5-fold cross validation while tuning hyperparameters in an attempt to minimize overfitting. In the end, XGBoost performed the best, scoring a RMSE of 0.552 on the training data. We chose to use this tuned XGBoost model as our final model, and found that it scored a RMSE of 0.547 on the test data.  
