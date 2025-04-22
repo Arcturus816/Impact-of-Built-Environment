@@ -147,11 +147,14 @@ We began by highlighting features that had a moderate correlation
 (roughly $0.3 < |R^2| < 0.8$) to our target variable, as indicated by correlation heat maps.
 We eliminated features by selecting between highly correlated variables to
 reduce multicollinearity.
-We also eliminated redundant features.
+We also found redundant variables that we could eliminate.
+For example, some columns indicated the number of households with 0, 1, or 2 automobiles in a given CBG,
+while others listed the respective percentages of each in the same CBG.
+
 The data analysis and visualization that aided in feature selection can be
 found in [`data_visualizations.ipynb`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/code/data_visualizations.ipynb).
-The heat map in this notebook indicates correlations between our final 17
-features and our target variable.
+Ultimately, we were able to trim our number of features down to 17 while maintaining a representative sample 
+of features.
 
 ## Model selection and results
 
