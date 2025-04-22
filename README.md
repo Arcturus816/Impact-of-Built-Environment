@@ -9,7 +9,27 @@
 - [Fabio Ricci](https://github.com/HAL9009MATH)
 
 ## Introduction
-There are more than 5 million motor vehicle accidents (MVCs) in the United States every year. While some contributing factors are out of the hands of policy makers, others are not. In our investigation, we seek to better understand the relationship between the built environment of a community and the number and severity of crashes in that area. Features of the built environment (which include roads, crosswalks, bike paths, and traffic signals) can be augmented or replaced. To more easily discuss the number and severity of crashes in a small region, we define the concept of "crash density" as (severity * number of crashes)/ (population density) for a given area. By modeling the relationship between built environment features and crash density, we can better anticipate the number of severe MVCs a community may expect in certain areas. Such knowledge could help local governments and city planning organizations better anticipate and respond to MVCs with emergency services and other resources, or consider ways to lower the crash density of existing and future regions; thus making their communities safer.
+
+There are more than 5 million motor vehicle crashes (MVCs) in the United States every year.
+While some contributing factors are out of the hands of policy makers, others are not.
+In our investigation, we seek to better understand the relationship between the
+built environment of a community and the number and severity of crashes in that area.
+Features of the built environment (which include roads, crosswalks, bike paths,
+and traffic signals) can be augmented or replaced.
+To more easily discuss the number and severity of crashes in a small region,
+we define the concept of "crash density" as
+
+$$
+\frac{\text{crashes} \times \text{severity}}{\text{population density}}
+$$
+
+for a given area.
+By modeling the relationship between built environment features and crash density,
+we can better anticipate the number of severe MVCs a community may expect in certain areas.
+Such knowledge could help local governments and city planning organizations
+better anticipate and respond to MVCs with emergency services and other resources,
+or consider ways to lower the crash density of existing and future regions,
+thus making their communities safer.
 
 ## Data sets
 
@@ -66,7 +86,7 @@ Notably, the data set comes not as a CSV file, but as a file geodatabase.[^gdb]
 [Wikipedia article](https://en.wikipedia.org/wiki/Geodatabase_(Esri))
 ([archive](https://archive.today/2025.04.21-230032/https://en.wikipedia.org/wiki/Geodatabase_(Esri)) on archive.today).
 
-## Data processing
+## Data augmentation and processing
 
 Before we could be begin, we needed to combine our two data sets.
 One possible approach would be to add built environment variables from the
@@ -97,9 +117,10 @@ could not find explanations of these variables in the
 so we decided not to use these variables.
 Instead, we controlled our target variable by population density.
 Thus, we engineered our target variable to be
+
 $$
 \text{"crash density"} =
-\frac{\text{crashes} \cdot \text{severity}}{\text{population density}}
+\frac{\text{crashes} \times \text{severity}}{\text{population density}}
 $$
 
 To merge the two data sets, we used GeoPandas to take the latitude-longitude data
@@ -115,22 +136,35 @@ census block group with fewer than 4 crashes from 2016 to 2023 probably has
 negligible motor vehicle activity.
 We also excluded crashes from the year 2020, since driving and pedestrian
 activity during that year was impacted by the COVID-19 pandemic lockdown.
+
 After cleaning our data, we performed log transformations on highly skewed
-variables.
+variables, which increased their interpretability.
 
 ## Feature selection
 
-During our feature selection process, we sought to reduce our number of features to fewer than 20. We began by highlighting features that had a moderate correlation (roughly .3<|R^2|<.8) to our target variable, as indicated by correlation heat maps. We eliminated features by selecting between highly correlated variables to reduce multicolinearity and by eliminating redundant features. For example, some columns indicated the number of households with 0, 1, or 2 automobiles in a given CBG while others listed the respective percentages of each in the same CBG. 
+During our feature selection process, we sought to reduce our number of features to fewer than 20.
+We began by highlighting features that had a moderate correlation
+(roughly $0.3 < |R^2| < 0.8$) to our target variable, as indicated by correlation heat maps.
+We eliminated features by selecting between highly correlated variables to
+reduce multicollinearity.
+We also found redundant variables that we could eliminate.
+For example, some columns indicated the number of households with 0, 1, or 2 automobiles in a given CBG,
+while others listed the respective percentages of each in the same CBG.
 
+The data analysis and visualization that aided in feature selection can be
+found in [`data_visualizations.ipynb`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/code/data_visualizations.ipynb).
 Ultimately, we were able to trim our number of features down to 17 while maintaining a representative sample 
 of features.
 
-Work toward this goal can be found in code/data_visualizations.ipynb within the repository. 
-
-
-
 ## Model selection and results
-After performing an 80/20 train-test split of our dataset and spending some time on exploratory data analysis, we began to train some models and compare their performances using root mean squared error (RMSE) as a performance metric. We started with Multiple Linear Regression as a baseline model and went on to consider Lasso and Ridge regression, Random Forest Regression and XGBoost Regression. For each of these models we used 5-fold cross validation while tuning hyperparameters in an attempt to minimize overfitting. In the end, XGBoost performed the best, scoring a RMSE of 0.552 on the training data. We chose to use this tuned XGBoost model as our final model, and found that it scored a RMSE of 0.547 on the test data.  
+
+After performing an 80/20 train-test split of our data set and spending some time on exploratory data analysis,
+we began to train some models and compare their performances using root mean squared error (RMSE) as a performance metric.
+We started with Multiple Linear Regression as a baseline model and went on to consider Lasso and Ridge regression,
+Random Forest Regression and XGBoost Regression.
+For each of these models we used 5-fold cross validation while tuning hyperparameters in an attempt to minimize overfitting.
+In the end, XGBoost performed the best, scoring a RMSE of 0.552 on the training data.
+We chose to use this tuned XGBoost model as our final model, and found that it scored a RMSE of 0.547 on the test data.
 
 ## Files
 
