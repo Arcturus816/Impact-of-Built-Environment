@@ -16,7 +16,7 @@ In our investigation, we seek to better understand the relationship between the
 built environment of a community and the number and severity of crashes in that area.
 Features of the built environment (which include roads, crosswalks, bike paths,
 and traffic signals) can be augmented or replaced.
-To more easily discuss the number and severity of crashes in a small region,
+To more easily discuss the number and severity of crashes across heterogeneous regions,
 we define the concept of "crash density" as
 
 $$
@@ -25,18 +25,18 @@ $$
 
 for a given area.
 By modeling the relationship between built environment features and crash density,
-we can better anticipate the number of severe MVCs a community may expect in certain areas.
+we can better predict the number of severe MVCs a community may expect in certain areas.
 Such knowledge could help local governments and city planning organizations
 better anticipate and respond to MVCs with emergency services and other resources,
 or consider ways to lower the crash density of existing and future regions,
-thus making their communities safer.
+thus making their communities safer for both drivers and pedestrians.
 
 ## Data sets
 
-We used two data sets, one for motor vehicle crashes, and another for features
-of the built environment.
+We used two data sets, one for MVCs, and another for features of the built environment.
 
-The motor vehicle crash data comes from [US Accidents (2016-2023)](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents)
+The MVC data comes from
+[US Accidents (2016-2023)](https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents)
 on Kaggle.[^kaggle]
 The data set contains approximately 7.7 million accident records spanning the
 contiguous United States from 2016 to 2023, scraped from Bing and MapQuest
@@ -62,7 +62,7 @@ junctions, traffic stops, roundabouts, etc.
 
 The data about the built environment comes from the [Smart Location Database](https://www.epa.gov/smartgrowth/smart-location-mapping)
 from the EPA.[^epa]
-The data set contains data for every census block group in the United States,[^cbg]
+The data set contains data for every census block group (CBG) in the United States,[^cbg]
 with over 200,000 rows.
 The data set has over 90 variables across various categories such as housing
 density, diversity of land use, neighborhood design, destination accessibility,
@@ -88,9 +88,9 @@ Notably, the data set comes not as a CSV file, but as a file geodatabase.[^gdb]
 
 ## Data augmentation and processing
 
-Before we could be begin, we needed to combine our two data sets.
+Before we could begin, we needed to combine our two data sets.
 One possible approach would be to add built environment variables from the
-EPA's Smart Location Database to each motor vehicle crash in the Kaggle data set.
+EPA's Smart Location Database to each MVC in the Kaggle data set.
 Such an approach would mean that our model would be observing features
 of crashes, then predicting the severity of the crash.
 However, this approach does not address the likelihood of a crash happening;
@@ -99,18 +99,18 @@ crash already happened.
 
 Thus, we adopted a different approach:
 Instead of attaching variables from the Smart Location Database to each crash
-from the Kaggle data set, we instead aggregated the crashes by census block group.
-With this approach, our model would observe features of a census block group,
+from the Kaggle data set, we instead aggregated the crashes by CBG.
+With this approach, our model would observe features of a CBG,
 then predict the number of severity-weighted crashes that occurred during the
 timeframe when the crash data was collected.
 
-When engineering our target variable, we took the severity variable from Kaggle
+To engineer our target variable, we took the severity variable from Kaggle
 to create a "severity-weighted" crash, so that our prediction model would
 weigh severe crashes more heavily than light crashes.
-We also realized that, since census block groups are highly heterogenous in
-terms of both population and land area, that we would need to somehow control
-for these confounding variables.
-Ideally, we would have controlled for vehicle miles traveled in each census block group.
+We also realized that, since CBGs are highly heterogeneous in terms of both
+population and land area, we would need to somehow control for these
+confounding variables.
+Ideally, we would have controlled for vehicle miles traveled in each CBG.
 While the Smart Location Database had variables with `VMT` in the name, we
 could not find explanations of these variables in the
 [Smart Location Database Technical Documentation and User Guide](https://www.epa.gov/system/files/documents/2023-10/epa_sld_3.0_technicaldocumentationuserguide_may2021_0.pdf),
@@ -130,10 +130,10 @@ We could then determine the census block group in which each crash occurred by
 using spatial join in GeoPandas.
 
 We cleaned the data of rows with nonsensical or extreme data
-(e.g. census block groups with zero population, zero land area, zero roads, etc.).
-We chose to exclude census block groups with fewer than 4 crashes, since a
-census block group with fewer than 4 crashes from 2016 to 2023 probably has
-negligible motor vehicle activity.
+(e.g. CBGs with zero population, zero land area, zero roads, etc.).
+We chose to exclude CBGs with fewer than 4 crashes, since a
+CBG with fewer than 4 crashes from 2016 to 2023 probably has negligible motor
+vehicle activity.
 We also excluded crashes from the year 2020, since driving and pedestrian
 activity during that year was impacted by the COVID-19 pandemic lockdown.
 
@@ -153,7 +153,7 @@ while others listed the respective percentages of each in the same CBG.
 
 The data analysis and visualization that aided in feature selection can be
 found in [`data_visualizations.ipynb`](https://github.com/Arcturus816/Impact-of-Built-Environment/blob/main/code/data_visualizations.ipynb).
-Ultimately, we were able to trim our number of features down to 17 while maintaining a representative sample 
+Ultimately, we were able to trim our number of features down to 17 while maintaining a representative sample
 of features.
 
 ## Model selection and results
