@@ -20,7 +20,7 @@ To more easily discuss the number and severity of crashes in a small region,
 we define the concept of "crash density" as
 
 $$
-\frac{\text{crashes} \cdot \text{severity}}{\text{population density}}
+\frac{\text{crashes} \times \text{severity}}{\text{population density}}
 $$
 
 for a given area.
@@ -120,7 +120,7 @@ Thus, we engineered our target variable to be
 
 $$
 \text{"crash density"} =
-\frac{\text{crashes} \cdot \text{severity}}{\text{population density}}
+\frac{\text{crashes} \times \text{severity}}{\text{population density}}
 $$
 
 To merge the two data sets, we used GeoPandas to take the latitude-longitude data
