@@ -86,7 +86,7 @@ Notably, the data set comes not as a CSV file, but as a file geodatabase.[^gdb]
 [Wikipedia article](https://en.wikipedia.org/wiki/Geodatabase_(Esri))
 ([archive](https://archive.today/2025.04.21-230032/https://en.wikipedia.org/wiki/Geodatabase_(Esri)) on archive.today).
 
-## Data processing
+## Data augmentation and processing
 
 Before we could be begin, we needed to combine our two data sets.
 One possible approach would be to add built environment variables from the
